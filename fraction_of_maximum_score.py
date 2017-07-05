@@ -21,7 +21,6 @@ Sample Input 3:
 A D
 Sample Output 3:
 0.50
-
 """
 
 from collections import Counter

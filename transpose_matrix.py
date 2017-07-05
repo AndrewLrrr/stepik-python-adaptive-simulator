@@ -23,7 +23,6 @@ Sample Input 2:
 Sample Output 2:
 1 3
 2 4
-
 """
 
 

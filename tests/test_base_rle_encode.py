@@ -1,5 +1,5 @@
 from unittest import TestCase
-from base_rle_encode import encode_rle
+from base_rle_encode import encode_rle_short as encode_rle
 
 
 class TestRleEncode(TestCase):

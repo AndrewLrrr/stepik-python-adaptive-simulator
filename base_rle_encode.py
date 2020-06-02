@@ -26,49 +26,33 @@ aaa b cccc CC a B
 Строка, содержащая закодированную последовательность.
 """
 
+
 from itertools import groupby
 
 
 def encode_rle_short(string):
-    group = [list(g) for k, g in groupby(string)]
-    print(group)
-    return ''.join([char[0] for char in group])
+    group = [(k, len(list(g))) for k, g in groupby(string)]
+    return ''.join([str(c) + l if c > 1 else l for l, c in group])
 
 
-def compress_sequence(string, char, length):
-    return string.replace(char * length, str(length) + char, 1)
-
-
-def encode_rle(string):
-    if not string:
+def encode_rle_long(string):
+    try:
+        prev = string[0]
+    except IndexError:
         return string
 
-    chars = list(string)
-    current_char = ''
-    char_counter = 1
+    count = 0
+    res = ''
 
-    for char in chars:
-        if not current_char:
-            current_char = char
+    for char in string:
+        if char != prev:
+            res += str(count) + prev if count > 1 else prev
+            prev = char
+            count = 1
         else:
-            if current_char == char:
-                char_counter += 1
-            else:
-                if char_counter > 1:
-                    string = compress_sequence(string, current_char, char_counter)
-                char_counter = 1
-                current_char = char
-
-    if char_counter > 1:
-        string = compress_sequence(string, current_char, char_counter)
-
-    return string
-
-
-def main():
-    print(encode_rle(input()))
+            count += 1
+    return res + (str(count) + prev if count > 1 else prev)
 
 
 if __name__ == '__main__':
-    main()
-
+    print(encode_rle_long(input()))
